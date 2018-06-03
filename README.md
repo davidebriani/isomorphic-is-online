@@ -39,8 +39,6 @@ isOnline().then(isOnline => {
 
 `isOnline` returns a promise which resolves to `true` if a connection can be established and resolves to `false` if it cannot or the network requests time out.
 
-| para
-
 ## Default and custom options
 
 An optional object can be passed to `isOnline` to customize some options:
@@ -52,7 +50,7 @@ An optional object can be passed to `isOnline` to customize some options:
 
 ```javascript
 const options = {
-  urls: ["https://apple.com", "//1.1.1.1"],
+  urls: ["https://www.apple.com", "//1.1.1.1"],
   timeout: 5000
 };
 
