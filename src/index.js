@@ -4,10 +4,23 @@ import fetch from "cross-fetch";
 
 const isString = s => typeof s === "string" || s instanceof String;
 
-const isOnline = async (customUrls: Array<string>, timeout: number = 3000) => {
-  let urls = ["//1.1.1.1"];
-  if (Array.isArray(customUrls) && customUrls.every(isString)) {
-    urls = customUrls;
+type options = {
+  urls: Array<string>,
+  timeout: number
+};
+
+const defaultOptions: options = {
+  urls: ["//1.1.1.1"],
+  timeout: 3000
+};
+
+const isOnline = async (options: options) => {
+  let { urls, timeout } = options;
+  if (!Array.isArray(urls) || !urls.every(isString)) {
+    urls = defaultOptions.urls;
+  }
+  if (!timeout || typeof timeout !== "number") {
+    timeout = defaultOptions.timeout;
   }
   const onlinePromise = new Promise((resolve, reject) => {
     let failedUrls = 0;
