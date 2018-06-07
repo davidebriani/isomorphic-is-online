@@ -1,20 +1,38 @@
 /* @flow */
 import "babel-polyfill";
+import { NetInfo } from "react-native";
 import fetch from "cross-fetch";
+import utils from "./utils";
 
 const isString = s => typeof s === "string" || s instanceof String;
 
-type options = {
+type Options = {
   urls: Array<string>,
   timeout: number
 };
 
-const defaultOptions: options = {
+const defaultOptions: Options = {
   urls: ["//1.1.1.1"],
   timeout: 3000
 };
 
-const isOnline = async (options: options) => {
+const isOnline = async (options?: Options = defaultOptions) => {
+  if (utils.environment === "REACT-NATIVE") {
+    const connectionInfo = await NetInfo.getConnectionInfo();
+    switch (connectionInfo.type) {
+      case "none":
+        return false;
+      case "wifi":
+        return true;
+      case "cellular":
+        return true;
+      case "unknown":
+        return false;
+      default:
+        return false;
+    }
+  }
+
   let { urls, timeout } = options;
   if (!Array.isArray(urls) || !urls.every(isString)) {
     urls = defaultOptions.urls;

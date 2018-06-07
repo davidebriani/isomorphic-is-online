@@ -69,6 +69,7 @@
   ],
   "dependencies": {
     "babel-polyfill": "6.26.0",
-    "cross-fetch": "2.2.1"
+    "cross-fetch": "2.2.1",
+    "react-native": "0.55.4"
   }
 }
