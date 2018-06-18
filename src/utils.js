@@ -11,5 +11,6 @@ export default {
     } else {
       return "NODE";
     }
-  }
+  },
+  isString: (s: any) => typeof s === "string" || s instanceof String
 };

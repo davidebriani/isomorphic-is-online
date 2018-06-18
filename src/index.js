@@ -4,8 +4,6 @@ import { NetInfo } from "react-native";
 import fetch from "cross-fetch";
 import utils from "./utils";
 
-const isString = s => typeof s === "string" || s instanceof String;
-
 type Options = {
   urls: Array<string>,
   timeout: number
@@ -34,7 +32,7 @@ const isOnline = async (options?: Options = defaultOptions) => {
   }
 
   let { urls, timeout } = options;
-  if (!Array.isArray(urls) || !urls.every(isString)) {
+  if (!Array.isArray(urls) || !urls.every(utils.isString)) {
     urls = defaultOptions.urls;
   }
   if (!timeout || typeof timeout !== "number") {
