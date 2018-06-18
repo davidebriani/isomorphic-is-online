@@ -81,6 +81,75 @@ describe("WEB", () => {
   });
 });
 
+describe("NODE", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    utils.__setEnvironment("NODE");
+  });
+
+  test("calls cross-fetch once by default", async done => {
+    try {
+      fetch.mockResolvedValue(true);
+      const online = await isOnline();
+      expect(fetch.mock.calls.length).toBe(1);
+      expect(fetch.mock.calls[0][0]).toBe(defaultOptions.urls[0]);
+      expect(online).toBe(true);
+      done();
+    } catch (e) {
+      done.fail(e);
+    }
+  });
+
+  test("calls cross-fetch three times for three urls", async done => {
+    try {
+      fetch.mockResolvedValue(true);
+      await isOnline({
+        urls: ["//1.1.1.1", "https://www.apple.com", "BAD URI"]
+      });
+      expect(fetch.mock.calls.length).toBe(3);
+      done();
+    } catch (e) {
+      done.fail(e);
+    }
+  });
+
+  test("uses default options when supplied malformed ones", async done => {
+    try {
+      fetch.mockResolvedValue(true);
+      await isOnline({
+        urls: ["//1.1.1.1", "https://www.apple.com", 1234567890],
+        timeout: "3000"
+      });
+      expect(fetch.mock.calls.length).toBe(1);
+      expect(fetch.mock.calls[0][0]).toBe(defaultOptions.urls[0]);
+      await isOnline({
+        urls: "//1.1.1.1",
+        timeout: 3000
+      });
+      expect(fetch.mock.calls.length).toBe(2);
+      expect(fetch.mock.calls[1][0]).toBe(defaultOptions.urls[0]);
+      done();
+    } catch (e) {
+      done.fail(e);
+    }
+  });
+
+  test("returns offline when every url is rejected", async done => {
+    try {
+      fetch.mockResolvedValue(Promise.reject());
+      const online = await isOnline({
+        urls: ["//1.1.1.1", "https://www.apple.com", "1234567890"],
+        timeout: 3000
+      });
+      expect(fetch.mock.calls.length).toBe(3);
+      expect(online).toBe(false);
+      done();
+    } catch (e) {
+      done.fail(e);
+    }
+  });
+});
+
 const getConnectionInfoSpy = jest.spyOn(NetInfo, "getConnectionInfo");
 describe("REACT-NATIVE", () => {
   beforeEach(() => {
@@ -88,11 +157,12 @@ describe("REACT-NATIVE", () => {
     utils.__setEnvironment("REACT-NATIVE");
   });
 
-  test("calls NetInfo once", async done => {
+  test("calls NetInfo once, doesn't call cross-fetch", async done => {
     try {
       NetInfo.__setConnectionInfo({ type: "wifi" });
       const online = await isOnline();
       expect(getConnectionInfoSpy.mock.calls.length).toBe(1);
+      expect(fetch.mock.calls.length).toBe(0);
       expect(online).toBe(true);
       done();
     } catch (e) {
