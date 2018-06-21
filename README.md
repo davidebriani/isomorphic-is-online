@@ -1,8 +1,11 @@
 # isomorphic-is-online
 
-[![Build passing](https://img.shields.io/travis/TheWorm/isomorphic-is-online.svg)](https://travis-ci.org/TheWorm/isomorphic-is-online)
+[![Build passing](https://img.shields.io/travis/TheWorm/isomorphic-is-online.svg?label=Travis+CI)](https://travis-ci.org/TheWorm/isomorphic-is-online)
 [![Code coverage](https://img.shields.io/codecov/c/github/theworm/isomorphic-is-online.svg)](https://codecov.io/github/theworm/isomorphic-is-online)
-[![Release version](https://img.shields.io/github/release/theworm/isomorphic-is-online.svg)](https://www.npmjs.com/package/isomorphic-is-online)
+[![NPM package](https://img.shields.io/npm/v/isomorphic-is-online.svg)](https://www.npmjs.com/package/isomorphic-is-online)
+[![Code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Last commit](https://img.shields.io/github/last-commit/theworm/isomorphic-is-online.svg)](https://github.com/TheWorm/isomorphic-is-online)
+[![License](https://img.shields.io/github/license/theworm/isomorphic-is-online.svg)](https://github.com/TheWorm/isomorphic-is-online/blob/master/LICENSE)
 
 A simple utility you can use to know if you are online or not.
 
