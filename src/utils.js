@@ -1,6 +1,7 @@
 /* @flow */
+
 export default {
-  get environment() {
+  get environment(): "WEB" | "REACT-NATIVE" | "NODE" {
     if (typeof document !== "undefined") {
       return "WEB";
     } else if (
@@ -12,5 +13,5 @@ export default {
       return "NODE";
     }
   },
-  isString: (s: any) => typeof s === "string" || s instanceof String
+  isString: (s: any): boolean => typeof s === "string" || s instanceof String
 };

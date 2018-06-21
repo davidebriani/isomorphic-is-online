@@ -14,7 +14,9 @@ const defaultOptions: Options = {
   timeout: 3000
 };
 
-const isOnline = async (options?: Options = defaultOptions) => {
+const isOnline = async (
+  options?: Options = defaultOptions
+): Promise<boolean> => {
   if (utils.environment === "REACT-NATIVE") {
     const connectionInfo = await NetInfo.getConnectionInfo();
     switch (connectionInfo.type) {
